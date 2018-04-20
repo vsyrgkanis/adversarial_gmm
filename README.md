@@ -1,12 +1,14 @@
 
-# deep_gmm
+# Adversarial Generalized Method of Moments
 
-Library Files
+Prototype Code for paper: [Adversarial Generalized Method of Moments](https://arxiv.org/abs/1803.07164) by Greg Lewis and Vasilis Syrgkanis
+
+## Library Files
 
 The main file is deep\_gmm.py that contains the main class. The file gmm\_game\_graph.py contains all tensorflow expressions related to the adversarial gmm game. The utils.py file contains some general purpose utilities. The monte\_carlo.py file contains an example of monte carlo simulations of the class and comparisons with other instrumental variable methods. 
 
 
-Example Use:
+## Example Use:
 ```python
 dgmm = DeepGMM(n_critics=n_critics, num_steps=num_steps, store_step=5, learning_rate_modeler=0.007,
                learning_rate_critics=0.007, critics_jitter=jitter, dissimilarity_eta=0.0,
@@ -25,7 +27,7 @@ final_fn_grid = dgmm.predict(test_grid.reshape(-1, 1), model='final')
 avg_fn_grid = dgmm.predict(test_grid.reshape(-1, 1), model='avg')
 ```
 
-Parameter explanation:
+## Parameter explanation:
 ```python
 class DeepGMM:
 
@@ -69,7 +71,7 @@ class DeepGMM:
         '''
 ```
 
-Monte Carlo Simulations
+## Monte Carlo Simulations
 
 ```bash
 python monte_carlo.py --iteration $number --dir $dir --num_instruments $dimension --n_samples $samples --num_steps $num_steps --func $func --radius $radius --n_critics $n_critics --strength $strength --jitter $jitter --dgp_two $dgp_two
