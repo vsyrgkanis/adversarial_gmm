@@ -70,22 +70,22 @@ class DeepGMM:
         summary_dir: where to store the summary
         '''
 
-  def fit(self, data_z, data_p, data_y):
-    ''' Fits the treatment response model.
-    Parameters
-    data_z: (n x d np array) of instruments
-    data_p: (n x p np array) of treatments
-    data_y: (n x 1 np array) of outcomes
-    '''
+    def fit(self, data_z, data_p, data_y):
+        ''' Fits the treatment response model.
+        Parameters
+        data_z: (n x d np array) of instruments
+        data_p: (n x p np array) of treatments
+        data_y: (n x 1 np array) of outcomes
+        '''
  
-  def predict(self, data_p):
-    ''' Predicts outcome for each treatment vector.
-    Parameters
-    data_p: (n x p np array) of treatments
+    def predict(self, data_p):
+        ''' Predicts outcome for each treatment vector.
+        Parameters
+        data_p: (n x p np array) of treatments
     
-    Returns
-    y_pred: (n x 1 np array) of counterfacual outcome predictions for each treatment
-    '''
+        Returns
+        y_pred: (n x 1 np array) of counterfacual outcome predictions for each treatment
+        '''
 ```
 
 ## Monte Carlo Simulations
