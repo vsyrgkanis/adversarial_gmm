@@ -3,6 +3,10 @@
 
 Prototype Code for paper: [Adversarial Generalized Method of Moments](https://arxiv.org/abs/1803.07164) by Greg Lewis and Vasilis Syrgkanis
 
+## Requirements
+
+Requires a Python 2 or 3, Tensorflow, and numpy 
+
 ## Library Files
 
 The main file is deep\_gmm.py that contains the main class. The file gmm\_game\_graph.py contains all tensorflow expressions related to the adversarial gmm game. The utils.py file contains some general purpose utilities. The monte\_carlo.py file contains an example of monte carlo simulations of the class and comparisons with other instrumental variable methods. 
