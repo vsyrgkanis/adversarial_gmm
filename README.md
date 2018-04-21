@@ -5,7 +5,7 @@ Prototype Code for paper: [Adversarial Generalized Method of Moments](https://ar
 
 ## Requirements
 
-Requires a Python 2 or 3, Tensorflow, and numpy 
+Requires Python 2 or 3, Tensorflow, and numpy 
 
 ## Library Files
 
