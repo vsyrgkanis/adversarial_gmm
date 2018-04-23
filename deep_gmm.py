@@ -19,24 +19,32 @@ class DeepGMM:
                  random_seed=None):
         ''' Initialize parameters
         Parameters
-        epsilon: discretization of instrument space
+        n_critics: number of critic functions
         batch_size_modeler: batch size for modeler gradient step
         num_steps: training steps
-        display_step: at how many steps to print some info
         store_step: at how many steps to store the function for calculating avg function
+        display_step: at how many steps to print some info
         check_loss_step: at how many steps to check the loss for calculating the best function
         train_ratio: ratio of (modeler, critics) updates
         hedge_step: at how many steps to update the meta-critic with hedge
         eta_hedge: step size of hedge
         loss_clip_hedge: clipping of the moments so that hedge doesn't blow up
+        bootstrap_hedge: whether to draw bootstrap subsamples for Hedge update
         learning_rate_modeler: step size for the modeler gradient descent
-        learning_rate_critic: step size for the critics gradient descents
+        learning_rate_critics: step size for the critics gradient descents
+        critics_jitter: whether to perform gradient descent on the parameters of the critics
+        critics_precision: the radius of the critics in number of samples
+        cluster_type: ('forest' | 'kmeans' | 'random_points') which method to use to select the center of the different critics
+        critic_type: ('Gaussian' | 'Uniform') whether to put a gaussian or a uniform on the sample points of the cluster
+        min_cluster_size: how many points to include in each cluster of points 
+        num_trees: only for the forest cluster type, how many trees to build
         l1_reg_weight_modeler: l1 regularization of modeler parameters
         l2_reg_weight_modeler: l2 regularization of modeler parameters
-        dnn_width: width of each layer of the modeler
-        dnn_depth: the number of hidden layers of the modeler
+        dnn_layers: (list of int) sizes of fully connected layers
         dnn_poly_degree: how many polynomial features to create as input to the dnn
         dissimilarity_eta: coefficient in front of dissimilarity loss for flexible critics
+        log_summary: whether to log the summary using tensorboard
+        summary_dir: where to store the summary
         '''
         self._n_critics = n_critics
         self._batch_size_modeler = batch_size_modeler
@@ -104,6 +112,13 @@ class DeepGMM:
         return cluster_labels, cluster_ids
 
     def fit(self, data_z, data_p, data_y):
+        ''' Fits the treatment response model.
+        Parameters
+        data_z: (n x d np array) of instruments
+        data_p: (n x p np array) of treatments
+        data_y: (n x 1 np array) of outcomes
+        '''
+        
         num_instruments = data_z.shape[1]
         num_treatments = data_p.shape[1]
         num_outcomes = data_y.shape[1]
@@ -355,6 +370,14 @@ class DeepGMM:
             writer.close()
 
     def predict(self, data_p, model='avg'):
+        ''' Predicts outcome for each treatment vector.
+        Parameters
+        data_p: (n x p np array) of treatments
+        model: (str one of avg | best | final) which version of the neural net model to use to predict
+    
+        Returns
+        y_pred: (n x 1 np array) of counterfacual outcome predictions for each treatment
+        '''
         
         if self.num_treatments == 1:
             if model == 'avg':
