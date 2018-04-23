@@ -82,11 +82,12 @@ class DeepGMM:
         data_y: (n x 1 np array) of outcomes
         '''
  
-    def predict(self, data_p):
+    def predict(self, data_p, model='avg'):
         ''' Predicts outcome for each treatment vector.
         Parameters
         data_p: (n x p np array) of treatments
-    
+        model: (str one of avg | best | final) which version of the neural net model to use to predict
+        
         Returns
         y_pred: (n x 1 np array) of counterfacual outcome predictions for each treatment
         '''
